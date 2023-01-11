@@ -10,8 +10,8 @@ EXTERNAL_NIC_NAME="ens160"
 dnf install bind bind-utils -y
 
 # Apply configuration
-\cp ~/openshift-cluster/dns/named.conf /etc/named.conf
-cp -R ~/openshift-cluster/dns/zones /etc/named/
+\cp ${HOME}/openshift-cluster/dns/named.conf /etc/named.conf
+cp -R ${HOME}/openshift-cluster/dns/zones /etc/named/
 
 # Configure the firewall for DNS
 firewall-cmd --add-port=53/udp --zone=internal --permanent

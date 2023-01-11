@@ -1,7 +1,7 @@
 #! /bin/bash -e
 set -x
 
-BASE_DIR_PATH="~/openshift-cluster"
+BASE_DIR_PATH="${HOME}/openshift-cluster"
 
 EXTERNAL_NIC_NAME="ens160"
 INTERNAL_NIC_NAME="ens192"
@@ -14,12 +14,12 @@ OPENSHIFT_CLIENT_LINUX_TAR_FILE_NAME="openshift-client-linux.tar.gz"
 OPENSHIFT_INSTALL_LINUX_TAR_FILE_NAME="openshift-install-linux.tar.gz"
 
 
-wget -c ${OPENSHIFT_CLIENT_LINUX_DOWNLOAD_URL} -o ${BASE_DIR_PATH}/${OPENSHIFT_CLIENT_LINUX_TAR_FILE_NAME} -q --show-progress
-wget -c ${OPENSHIFT_INSTALL_LINUX_DOWNLOAD_URL} -o ${BASE_DIR_PATH}/${OPENSHIFT_INSTALL_LINUX_TAR_FILE_NAME} -q --show-progress
+wget -c "${OPENSHIFT_CLIENT_LINUX_DOWNLOAD_URL}" -o "$(${BASE_DIR_PATH}/${OPENSHIFT_CLIENT_LINUX_TAR_FILE_NAME})" -q --show-progress
+wget -c "${OPENSHIFT_INSTALL_LINUX_DOWNLOAD_URL}" -o "$(${BASE_DIR_PATH}/${OPENSHIFT_INSTALL_LINUX_TAR_FILE_NAME})" -q --show-progress
 
 cd ${BASE_DIR_PATH}
 # Extract Client tools and copy them to /usr/local/bin
-tar xvf ${OPENSHIFT_CLIENT_LINUX_TAR_FILE_NAME}
+tar xvf "$(${BASE_DIR_PATH}/${OPENSHIFT_CLIENT_LINUX_TAR_FILE_NAME})"
 mv oc kubectl /usr/local/bin
 
 # Confirm Client Tools are working
@@ -27,18 +27,18 @@ echo $(oc version)
 echo $(kubectl version)
 
 # Extract the OpenShift Installer
-tar xvf ${OPENSHIFT_INSTALL_LINUX_TAR_FILE_NAME}
+tar xvf "$(${BASE_DIR_PATH}/${OPENSHIFT_INSTALL_LINUX_TAR_FILE_NAME})"
 
 # ${RHCOS_RAW_FILE_NAME}
 
-cat <<EOT >> ~/.vimrc
+cat <<EOT >> ${HOME}/.vimrc
 syntax on
 set nu et ai sts=0 ts=2 sw=2 list hls
 EOT
 
-echo "export OC_EDITOR=\"vim\"" >> ~/.bash_profile
-echo "export KUBE_EDITOR=\"vim\"" >> ~/.bash_profile
-source ~/.bash_profile
+echo "export OC_EDITOR=\"vim\"" >> ${HOME}/.bash_profile
+echo "export KUBE_EDITOR=\"vim\"" >> ${HOME}/.bash_profile
+source ${HOME}/.bash_profile
 
 
 # cat <<EOT >> /etc/resolv.conf

@@ -2,12 +2,12 @@
 
 set -x
 
-BASE_DIR_PATH="~/openshift-cluster"
+BASE_DIR_PATH="${HOME}/openshift-cluster"
 # Generate and host install files
 
 RHCOS_DOWNLOAD_URL="https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.5/latest/rhcos-metal.x86_64.raw.gz"
 RHCOS_RAW_FILE_NAME="rhcos.raw.gz"
-wget -c ${RHCOS_DOWNLOAD_URL} -o ${BASE_DIR_PATH}/${RHCOS_RAW_FILE_NAME} -q --show-progress
+wget -c "${RHCOS_DOWNLOAD_URL}" -o "$(${BASE_DIR_PATH}/${RHCOS_RAW_FILE_NAME})" -q --show-progress
 
 # Generate an SSH key pair keeping all default options
 ssh-keygen -q -t ed25519 -N '' <<< $'\ny' >/dev/null 2>&1
@@ -24,7 +24,7 @@ cp ${BASE_DIR_PATH}/install-config.yaml ${BASE_DIR_PATH}/ocp-install
 PULL_SECRET="$(cat ${BASE_DIR_PATH}/pull-secret)" 
 sed -i "s/pullSecret.*/pullSecret: \"$PULL_SECRET\"/g" ${BASE_DIR_PATH}/ocp-install/install-config.yaml  
 
-SSH_KEY="$(cat ~/.ssh/id_ed25519.pub)" 
+SSH_KEY="$(cat ${HOME}/.ssh/id_ed25519.pub)" 
 sed -i "s/sshKey.*/pullSecret: \"$SSH_KEY\"/g" ${BASE_DIR_PATH}/ocp-install/install-config.yaml 
 
 # Generate Kubernetes manifest files

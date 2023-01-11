@@ -90,7 +90,7 @@
 1. Move the files downloaded from the RedHat Cluster Manager site to the ocp-svc node
 
    ```bash
-   scp ~/Downloads/openshift-install-linux.tar.gz ~/Downloads/openshift-client-linux.tar.gz ~/Downloads/rhcos-metal.x86_64.raw.gz root@{ocp-svc_IP_address}:/root/
+   scp ${HOME}/Downloads/openshift-install-linux.tar.gz ${HOME}/Downloads/openshift-client-linux.tar.gz ${HOME}/Downloads/rhcos-metal.x86_64.raw.gz root@{ocp-svc_IP_address}:/root/
    ```
 
 1. SSH to the ocp-svc vm
@@ -137,10 +137,10 @@
    git clone https://github.com/jaykumarpatil/openshift-cluster.git
    ```
 
-1. OPTIONAL: Create a file '~/.vimrc' and paste the following (this helps with editing in vim, particularly yaml files):
+1. OPTIONAL: Create a file '${HOME}/.vimrc' and paste the following (this helps with editing in vim, particularly yaml files):
 
    ```bash
-   cat <<EOT >> ~/.vimrc
+   cat <<EOT >> ${HOME}/.vimrc
    syntax on
    set nu et ai sts=0 ts=2 sw=2 list hls
    EOT
@@ -217,8 +217,8 @@
    Apply configuration
 
    ```bash
-   \cp ~/openshift-cluster/dns/named.conf /etc/named.conf
-   cp -R ~/openshift-cluster/dns/zones /etc/named/
+   \cp ${HOME}/openshift-cluster/dns/named.conf /etc/named.conf
+   cp -R ${HOME}/openshift-cluster/dns/zones /etc/named/
    ```
 
    Configure the firewall for DNS
@@ -271,7 +271,7 @@
    Edit dhcpd.conf from the cloned git repo to have the correct mac address for each host and copy the conf file to the correct location for the DHCP service to use
 
    ```bash
-   \cp ~/openshift-cluster/dhcpd.conf /etc/dhcp/dhcpd.conf
+   \cp ${HOME}/openshift-cluster/dhcpd.conf /etc/dhcp/dhcpd.conf
    ```
 
    Configure the Firewall
@@ -335,7 +335,7 @@
    Copy HAProxy config
 
    ```bash
-   \cp ~/openshift-cluster/haproxy.cfg /etc/haproxy/haproxy.cfg
+   \cp ${HOME}/openshift-cluster/haproxy.cfg /etc/haproxy/haproxy.cfg
    ```
 
    Configure the Firewall
@@ -415,38 +415,38 @@
 1. Create an install directory
 
    ```bash
-   mkdir ~/ocp-install
+   mkdir ${HOME}/ocp-install
    ```
 
 1. Copy the install-config.yaml included in the clones repository to the install directory
 
    ```bash
-   cp ~/openshift-cluster/install-config.yaml ~/ocp-install
+   cp ${HOME}/openshift-cluster/install-config.yaml ${HOME}/ocp-install
    ```
 
 1. Update the install-config.yaml with your own pull-secret and ssh key.
 
    - Line 23 should contain the contents of your pull-secret.txt
-   - Line 24 should contain the contents of your '~/.ssh/id_rsa.pub'
+   - Line 24 should contain the contents of your '${HOME}/.ssh/id_rsa.pub'
 
    ```bash
-   vim ~/ocp-install/install-config.yaml
+   vim ${HOME}/ocp-install/install-config.yaml
    ```
 
 1. Generate Kubernetes manifest files
 
    ```bash
-   ~/openshift-install create manifests --dir ~/ocp-install
+   ${HOME}/openshift-install create manifests --dir ${HOME}/ocp-install
    ```
 
    > A warning is shown about making the control plane nodes schedulable. It is up to you if you want to run workloads on the Control Plane nodes. If you dont want to you can disable this with:
-   > `sed -i 's/mastersSchedulable: true/mastersSchedulable: false/' ~/ocp-install/manifests/cluster-scheduler-02-config.yml`.
+   > `sed -i 's/mastersSchedulable: true/mastersSchedulable: false/' ${HOME}/ocp-install/manifests/cluster-scheduler-02-config.yml`.
    > Make any other custom changes you like to the core Kubernetes manifest files.
 
    Generate the Ignition config and Kubernetes auth files
 
    ```bash
-   ~/openshift-install create ignition-configs --dir ~/ocp-install/
+   ${HOME}/openshift-install create ignition-configs --dir ${HOME}/ocp-install/
    ```
 
 1. Create a hosting directory to serve the configuration files for the OpenShift booting process
@@ -458,13 +458,13 @@
 1. Copy all generated install files to the new web server directory
 
    ```bash
-   cp -R ~/ocp-install/* /var/www/html/ocp4
+   cp -R ${HOME}/ocp-install/* /var/www/html/ocp4
    ```
 
 1. Move the Core OS image to the web server directory (later you need to type this path multiple times so it is a good idea to shorten the name)
 
    ```bash
-   mv ~/rhcos-X.X.X-x86_64-metal.x86_64.raw.gz /var/www/html/ocp4/rhcos
+   mv ${HOME}/rhcos-X.X.X-x86_64-metal.x86_64.raw.gz /var/www/html/ocp4/rhcos
    ```
 
 1. Change ownership and permissions of the web server directory
@@ -516,7 +516,7 @@
 1. You can monitor the bootstrap process from the ocp-svc host at different log levels (debug, error, info)
 
    ```bash
-   ~/openshift-install --dir ~/ocp-install wait-for bootstrap-complete --log-level=debug
+   ${HOME}/openshift-install --dir ${HOME}/ocp-install wait-for bootstrap-complete --log-level=debug
    ```
 
 1. Once bootstrapping is complete the ocp-boostrap node [can be removed](#remove-the-bootstrap-node)
@@ -541,7 +541,7 @@
 1. Collect the OpenShift Console address and kubeadmin credentials from the output of the install-complete event
 
    ```bash
-   ~/openshift-install --dir ~/ocp-install wait-for install-complete
+   ${HOME}/openshift-install --dir ${HOME}/ocp-install wait-for install-complete
    ```
 
 1. Continue to join the worker nodes to the cluster in a new tab whilst waiting for the above command to complete
@@ -551,7 +551,7 @@
 1. Setup 'oc' and 'kubectl' clients on the ocp-svc machine
 
    ```bash
-   export KUBECONFIG=~/ocp-install/auth/kubeconfig
+   export KUBECONFIG=${HOME}/ocp-install/auth/kubeconfig
    # Test auth by viewing cluster nodes
    oc get nodes
    ```
@@ -607,7 +607,7 @@
 1. Create the persistent volume for the 'image-registry-storage' pvc to bind to
 
    ```bash
-   oc create -f ~/openshift-cluster/manifest/registry-pv.yaml
+   oc create -f ${HOME}/openshift-cluster/manifest/registry-pv.yaml
    ```
 
 1. After a short wait the 'image-registry-storage' pvc should now be bound
@@ -620,10 +620,10 @@
 
 1. Apply the `oauth-htpasswd.yaml` file to the cluster
 
-   > This will create a user 'admin' with the password 'password'. To set a different username and password substitue the htpasswd key in the '~/openshift-cluster/manifest/oauth-htpasswd.yaml' file with the output of `htpasswd -n -B -b <username> <password>`
+   > This will create a user 'admin' with the password 'password'. To set a different username and password substitue the htpasswd key in the '${HOME}/openshift-cluster/manifest/oauth-htpasswd.yaml' file with the output of `htpasswd -n -B -b <username> <password>`
 
    ```bash
-   oc apply -f ~/openshift-cluster/manifest/oauth-htpasswd.yaml
+   oc apply -f ${HOME}/openshift-cluster/manifest/oauth-htpasswd.yaml
    ```
 
 1. Assign the new user (admin) admin permissions
@@ -656,7 +656,7 @@
 1. Navigate to the [OpenShift Console URL](https://console-openshift-console.apps.lab.ocp.lan) and log in as the 'admin' user
 
    > You will get self signed certificate warnings that you can ignore
-   > If you need to login as kubeadmin and need to the password again you can retrieve it with: `cat ~/ocp-install/auth/kubeadmin-password`
+   > If you need to login as kubeadmin and need to the password again you can retrieve it with: `cat ${HOME}/ocp-install/auth/kubeadmin-password`
 
 ## Troubleshooting
 
