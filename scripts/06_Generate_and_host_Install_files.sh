@@ -11,6 +11,12 @@ wget -c ${RHCOS_DOWNLOAD_URL} -o ${RHCOS_RAW_FILE_NAME}
 # Generate an SSH key pair keeping all default options
 ssh-keygen -q -t ed25519 -N '' <<< $'\ny' >/dev/null 2>&1
 
+PULL_SECRET="$(cat ${BASE_DIR_PATH}/pull-secret)" 
+sed -i "s/pullSecret.*/pullSecret: \"$PULL_SECRET\"/g" ${BASE_DIR_PATH}/install-config.yaml  
+
+SSH_KEY="$(cat ~/.ssh/id_ed25519.pub)" 
+sed -i "s/sshKey.*/pullSecret: \"$SSH_KEY\"/g" ${BASE_DIR_PATH}/install-config.yaml  
+
 # Create an install directory
 mkdir ${BASE_DIR_PATH}/ocp-install
 
