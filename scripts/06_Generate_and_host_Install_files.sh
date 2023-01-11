@@ -13,7 +13,7 @@ ssh-keygen -q -t ed25519 -N '' <<< $'\ny' >/dev/null 2>&1
 mkdir ${BASE_DIR_PATH}/ocp-install
 
 # Copy the install-config.yaml included in the clones repository to the install directory
-cp ${BASE_DIR_PATH}/ocp4-metal-install/install-config.yaml ${BASE_DIR_PATH}/ocp-install
+cp ${BASE_DIR_PATH}/install-config.yaml ${BASE_DIR_PATH}/ocp-install
 
 # Update the install-config.yaml with your own pull-secret and ssh key.
 # Line 23 should contain the contents of your pull-secret.txt
@@ -52,7 +52,7 @@ ssh-keygen
 mkdir ${BASE_DIR_PATH}/ocp-install
 # Copy the install-config.yaml included in the clones repository to the install directory
 
-cp ${BASE_DIR_PATH}/ocp4-metal-install/install-config.yaml ${BASE_DIR_PATH}/ocp-install
+cp ${BASE_DIR_PATH}/install-config.yaml ${BASE_DIR_PATH}/ocp-install
 # Update the install-config.yaml with your own pull-secret and ssh key.
 
 # Line 23 should contain the contents of your pull-secret.txt
