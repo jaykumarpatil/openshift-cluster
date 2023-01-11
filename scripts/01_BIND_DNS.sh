@@ -2,6 +2,8 @@
 
 set -x
 
+EXTERNAL_NIC_NAME="ens160"
+
 # Install and configure BIND DNS
 
 # Install
@@ -25,7 +27,8 @@ systemctl status named
 
 # At the moment DNS will still be pointing to the LAN DNS server. You can see this by testing with dig ocp.lan.
 # Change the LAN nic (ens192) to use 127.0.0.1 for DNS AND ensure Ignore automatically Obtained DNS parameters is ticked
-nmcli con mod ens160 ipv4.dns "127.0.0.1"
+nmcli con modify ${EXTERNAL_NIC_NAME} ipv4.dns "127.0.0.1"
+nmcli con modify ${EXTERNAL_NIC_NAME} ipv4.ignore-auto-dns yes
 
 # Restart Network Manager
 systemctl restart NetworkManager
