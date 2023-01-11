@@ -1,5 +1,7 @@
 #! /bin/bash -e
 
+set -x
+
 # Install and configure NFS for the OpenShift Registry. It is a requirement to provide storage for the Registry, emptyDir can be specified if necessary.
 
 # Install NFS Server

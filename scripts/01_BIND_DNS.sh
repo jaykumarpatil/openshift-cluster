@@ -1,13 +1,15 @@
 #! /bin/bash -e
 
+set -x
+
 # Install and configure BIND DNS
 
 # Install
 dnf install bind bind-utils -y
 
 # Apply configuration
-\cp ${BASE_DIR_PATH}/dns/named.conf /etc/named.conf
-cp -R ${BASE_DIR_PATH}/dns/zones /etc/named/
+\cp ~/openshift-cluster/dns/named.conf /etc/named.conf
+cp -R ~/openshift-cluster/dns/zones /etc/named/
 
 # Configure the firewall for DNS
 firewall-cmd --add-port=53/udp --zone=internal --permanent

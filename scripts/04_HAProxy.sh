@@ -1,10 +1,12 @@
 #! /bin/bash -e
 
+set -x
+
 # Install HAProxy
 dnf install haproxy -y
 
 # Copy HAProxy config
-\cp ${BASE_DIR_PATH}/haproxy.cfg /etc/haproxy/haproxy.cfg
+\cp ~/openshift-cluster/haproxy.cfg /etc/haproxy/haproxy.cfg
 
 # Configure the Firewall
 # Note: Opening port 9000 in the external zone allows access to HAProxy stats that are useful for monitoring and troubleshooting. The UI can be accessed at: http://{ocp-svc_IP_address}:9000/stats

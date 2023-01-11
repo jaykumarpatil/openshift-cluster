@@ -1,5 +1,7 @@
 #! /bin/bash -e
 
+set -x
+
 # Generate and host install files
 
 RHCOS_DOWNLOAD_URL="https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.5/latest/rhcos-metal.x86_64.raw.gz"

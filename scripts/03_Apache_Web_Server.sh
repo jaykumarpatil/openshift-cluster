@@ -1,5 +1,7 @@
 # Install and configure Apache Web Server
 
+set -x
+
 # Install Apache
 dnf install httpd -y
 
