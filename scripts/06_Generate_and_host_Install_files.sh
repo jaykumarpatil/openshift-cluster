@@ -7,7 +7,7 @@ BASE_DIR_PATH="${HOME}/openshift-cluster"
 
 RHCOS_DOWNLOAD_URL="https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.5/latest/rhcos-metal.x86_64.raw.gz"
 RHCOS_RAW_FILE_NAME="rhcos.raw.gz"
-wget -c "${RHCOS_DOWNLOAD_URL}" -o "$(${BASE_DIR_PATH}/${RHCOS_RAW_FILE_NAME})" -q --show-progress
+wget -c "${RHCOS_DOWNLOAD_URL}" -P ${BASE_DIR_PATH} -O ${RHCOS_RAW_FILE_NAME} -q --show-progress
 
 # Generate an SSH key pair keeping all default options
 ssh-keygen -q -t ed25519 -N '' <<< $'\ny' >/dev/null 2>&1
