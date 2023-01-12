@@ -15,7 +15,7 @@ firewall-cmd --reload
 # Enable and start the service
 systemctl enable httpd
 systemctl start httpd
-systemctl status httpd
+systemctl is-active --quiet httpd && echo httpd service is running
 
 # Making a GET request to localhost on port 8080 should now return the default Apache webpage
 curl localhost:8080

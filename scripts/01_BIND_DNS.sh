@@ -23,7 +23,8 @@ firewall-cmd --reload
 # Enable and start the service
 systemctl enable named
 systemctl start named
-systemctl status named
+systemctl is-active --quiet named && echo named service is running
+
 
 # At the moment DNS will still be pointing to the LAN DNS server. You can see this by testing with dig ocp.lan.
 # Change the LAN nic (ens192) to use 127.0.0.1 for DNS AND ensure Ignore automatically Obtained DNS parameters is ticked

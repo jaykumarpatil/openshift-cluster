@@ -24,4 +24,4 @@ firewall-cmd --reload
 setsebool -P haproxy_connect_any 1 # SELinux name_bind access
 systemctl enable haproxy
 systemctl start haproxy
-systemctl status haproxy
+systemctl is-active --quiet haproxy && echo haproxy service is running
