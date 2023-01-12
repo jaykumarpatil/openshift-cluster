@@ -26,3 +26,4 @@ firewall-cmd --reload
 # Enable and start the NFS related services
 systemctl enable nfs-server rpcbind
 systemctl start nfs-server rpcbind nfs-mountd
+systemctl is-active --quiet nfs-server && echo nfs-server service is running  

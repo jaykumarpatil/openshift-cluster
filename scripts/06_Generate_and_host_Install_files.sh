@@ -22,10 +22,10 @@ mkdir -p ${BASE_DIR_PATH}/ocp-install
 # Line 23 should contain the contents of your pull-secret.txt
 # Line 24 should contain the contents of your '${BASE_DIR_PATH}/.ssh/id_rsa.pub'
 PULL_SECRET="$(cat ${BASE_DIR_PATH}/pull-secret)" 
-sed -i "s/pullSecret.*/pullSecret: \"$PULL_SECRET\"/g" ${BASE_DIR_PATH}/ocp-install/install-config.yaml  
+sed -i "s/pullSecret.*/pullSecret: \'${PULL_SECRET}\'/g" "${BASE_DIR_PATH}/ocp-install/install-config.yaml"  
 
 SSH_KEY="$(cat ${HOME}/.ssh/id_ed25519.pub)" 
-sed -i "s/sshKey.*/sshKey: \"$SSH_KEY\"/g" ${BASE_DIR_PATH}/ocp-install/install-config.yaml 
+sed -i "s#sshKey.*#sshKey: \"${SSH_KEY}\"#g" "${BASE_DIR_PATH}/ocp-install/install-config.yaml" 
 
 # Generate Kubernetes manifest files
 ${BASE_DIR_PATH}/openshift-install create manifests --dir ${BASE_DIR_PATH}/ocp-install
