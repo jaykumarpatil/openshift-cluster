@@ -14,8 +14,8 @@ OPENSHIFT_CLIENT_LINUX_TAR_FILE_NAME="openshift-client-linux.tar.gz"
 OPENSHIFT_INSTALL_LINUX_TAR_FILE_NAME="openshift-install-linux.tar.gz"
 
 
-wget -c "${OPENSHIFT_CLIENT_LINUX_DOWNLOAD_URL}" -P "$(${BASE_DIR_PATH} -O ${OPENSHIFT_CLIENT_LINUX_TAR_FILE_NAME} -q --show-progress
-wget -c "${OPENSHIFT_INSTALL_LINUX_DOWNLOAD_URL}" -P "$(${BASE_DIR_PATH} -O ${OPENSHIFT_INSTALL_LINUX_TAR_FILE_NAME} -q --show-progress
+wget -c "${OPENSHIFT_CLIENT_LINUX_DOWNLOAD_URL}" -P "${BASE_DIR_PATH}" -O "${OPENSHIFT_CLIENT_LINUX_TAR_FILE_NAME}" -q --show-progress
+wget -c "${OPENSHIFT_INSTALL_LINUX_DOWNLOAD_URL}" -P "${BASE_DIR_PATH}" -O "${OPENSHIFT_INSTALL_LINUX_TAR_FILE_NAME}" -q --show-progress
 
 cd ${BASE_DIR_PATH}
 # Extract Client tools and copy them to /usr/local/bin
