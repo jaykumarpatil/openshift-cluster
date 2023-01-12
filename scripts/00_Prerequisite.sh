@@ -19,7 +19,7 @@ wget -c "${OPENSHIFT_INSTALL_LINUX_DOWNLOAD_URL}" -P "${BASE_DIR_PATH}" -O "${OP
 
 cd ${BASE_DIR_PATH}
 # Extract Client tools and copy them to /usr/local/bin
-tar xvf "$(${BASE_DIR_PATH}/${OPENSHIFT_CLIENT_LINUX_TAR_FILE_NAME})"
+tar xvf "$(${BASE_DIR_PATH}/${OPENSHIFT_CLIENT_LINUX_TAR_FILE_NAME})" -C "${BASE_DIR_PATH}"
 mv oc kubectl /usr/local/bin
 
 # Confirm Client Tools are working
@@ -27,7 +27,7 @@ echo $(oc version)
 echo $(kubectl version)
 
 # Extract the OpenShift Installer
-tar xvf "$(${BASE_DIR_PATH}/${OPENSHIFT_INSTALL_LINUX_TAR_FILE_NAME})"
+tar xvf "$(${BASE_DIR_PATH}/${OPENSHIFT_INSTALL_LINUX_TAR_FILE_NAME})" -C "${BASE_DIR_PATH}"
 
 # ${RHCOS_RAW_FILE_NAME}
 
