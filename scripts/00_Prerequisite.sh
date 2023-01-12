@@ -55,8 +55,8 @@ nmcli con mod ${INTERNAL_NIC_NAME} ipv4.method manual
 nmcli con mod ${INTERNAL_NIC_NAME} ipv4.dns-search "ocp.lan"
 systemctl restart NetworkManager
 
-nmcli connection modify ${EXTERNAL_NIC_NAME} connection.zone internal
-nmcli connection modify ${INTERNAL_NIC_NAME} connection.zone external
+nmcli connection modify ${EXTERNAL_NIC_NAME} connection.zone external
+nmcli connection modify ${INTERNAL_NIC_NAME} connection.zone internal
 
 firewall-cmd --get-active-zones
 firewall-cmd --zone=external --add-masquerade --permanent

@@ -7,16 +7,16 @@ BASE_DIR_PATH="${HOME}/openshift-cluster"
 
 RHCOS_DOWNLOAD_URL="https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.5/latest/rhcos-metal.x86_64.raw.gz"
 RHCOS_RAW_FILE_NAME="rhcos.raw.gz"
-wget -c "${RHCOS_DOWNLOAD_URL}" -P ${BASE_DIR_PATH} -O ${RHCOS_RAW_FILE_NAME} -q --show-progress
+wget -P "${BASE_DIR_PATH}" -O "${RHCOS_RAW_FILE_NAME}" -c "${RHCOS_DOWNLOAD_URL}" -q --show-progress
 
 # Generate an SSH key pair keeping all default options
 ssh-keygen -q -t ed25519 -N '' <<< $'\ny' >/dev/null 2>&1
 
 # Create an install directory
-mkdir ${BASE_DIR_PATH}/ocp-install
+mkdir -p ${BASE_DIR_PATH}/ocp-install
 
 # Copy the install-config.yaml included in the clones repository to the install directory
-cp ${BASE_DIR_PATH}/install-config.yaml ${BASE_DIR_PATH}/ocp-install
+\cp ${BASE_DIR_PATH}/install-config.yaml ${BASE_DIR_PATH}/ocp-install
 
 # Update the install-config.yaml with your own pull-secret and ssh key.
 # Line 23 should contain the contents of your pull-secret.txt
@@ -25,7 +25,7 @@ PULL_SECRET="$(cat ${BASE_DIR_PATH}/pull-secret)"
 sed -i "s/pullSecret.*/pullSecret: \"$PULL_SECRET\"/g" ${BASE_DIR_PATH}/ocp-install/install-config.yaml  
 
 SSH_KEY="$(cat ${HOME}/.ssh/id_ed25519.pub)" 
-sed -i "s/sshKey.*/pullSecret: \"$SSH_KEY\"/g" ${BASE_DIR_PATH}/ocp-install/install-config.yaml 
+sed -i "s/sshKey.*/sshKey: \"$SSH_KEY\"/g" ${BASE_DIR_PATH}/ocp-install/install-config.yaml 
 
 # Generate Kubernetes manifest files
 ${BASE_DIR_PATH}/openshift-install create manifests --dir ${BASE_DIR_PATH}/ocp-install
